@@ -1,0 +1,75 @@
+#%RAML 1.0
+title: events
+version: 1.0.0
+baseUri: http://localhost:3000
+mediaType: application/json
+types:
+    User:
+        type: object
+        properties:
+            first_name: string
+            last_name: string
+            email: string
+/users:
+    get:
+        description: Возвращает пользователей
+        queryParameters:
+            event_id:
+                description: ID события
+                required: false
+                type: int
+                example: 1
+            limit:
+                required: false,
+                type: int,
+                example: 20,
+                default: 50
+            page:
+                required: false,
+                type: int,
+                example: 1,
+                default: 1
+        responses:
+            200:
+                body:
+                    application/json:
+                        example: [
+                                {
+                                    "first_name": "John",
+                                    "last_name": "Bay",
+                                    "email": "test@mail.com"
+                                }
+                            ]
+    post:
+        description: Добавляет нового пользователя.
+        body:
+            application/json:
+                type: User
+        responses:
+            200:
+                application/json:
+                    example: {"id": 2}
+            400:
+                application/json:
+                    example: { "fist_name": "Is required." }
+    update:
+        description: Изменяет данные пользователя. Может быть переданы некоторые поля пользователя которые должны быть обновлены.
+        body:
+            application/json:
+                example: { "first_name": "Bill" }
+        responses:
+            200:
+                application/json:
+                    example: { "success": true }
+            400:
+                application/json:
+                    example: { "first_name": "Must be a string." }
+    delete:
+        desсription: Удаляет пользователя по ID.
+        body:
+            application/json:
+                example: { "id": 2 }
+        responses:
+            200:
+                application/json:
+                    example: { "success": true }
