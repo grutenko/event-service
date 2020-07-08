@@ -23,7 +23,7 @@ php:
     ports:
         - "9000:9000"
     volumes:
-        - ./www/lumen/:/var/www/html
+        - ./src/:/var/www/html
     links:
         - mysql
     
