@@ -70,7 +70,7 @@ types:
                                     success: true
             delete:
                 description: |
-                    Удаляет пользователя из списка участников мероприятия __event_id__.
+                    Удаляет пользователя из списка участников мероприятия _event_id_.
                     Возвращает __success:true__ или одну из ошибок:
 
                     1. USER_NOT_FOUND
@@ -79,15 +79,20 @@ types:
                     _Если пользователь не является участником этого события, то просто возвращается успешный ответ._
                 body:
                     application/json:
-                        example: |
-                            {"event_id": 1}
+                        properties:
+                            event_id:
+                                type: integer
                 responses:
                     400: 
-                        body: |
-                            {"error": "USER_NOT_FOUND"}
+                        body: Error
                     200: 
-                        body: |
-                            {"success": true}
+                        body:
+                            application/json:
+                                properties:
+                                    success:
+                                        type: boolean
+                                example:
+                                    success: true
     get:
         description: Возвращает пользователей.
         queryParameters:
@@ -120,16 +125,20 @@ types:
         body: User
         responses:
             200: 
-                body: |
-                    {"id": 2}
+                body:
+                    application/json:
+                        properties:
+                            id:
+                                type: integer
             400: 
-                body: |
-                    { "error": "INVALID_PARAMS", "fist_name": "Is required." }
+                body: Error
     delete:
         desсription: Удаляет пользователя по ID.
-        body: |
-            { "id": 2 }
-        responses:
+        body:
+            application/json:
+                properties:
+                    id:
+                        type: integer
             200:
                 body: |
                     { "success": true }
