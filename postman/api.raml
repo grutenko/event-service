@@ -33,7 +33,8 @@ types:
             200:
                 body:
                     application/json:
-                        example: [
+                        example: |
+                            [
                                 {
                                     "first_name": "John",
                                     "last_name": "Bay",
@@ -48,28 +49,34 @@ types:
         responses:
             200:
                 application/json:
-                    example: {"id": 2}
+                    example: |
+                        {"id": 2}
             400:
                 application/json:
-                    example: { "fist_name": "Is required." }
+                    example: |
+                        { "fist_name": "Is required." }
     update:
         description: Изменяет данные пользователя. Может быть переданы некоторые поля пользователя которые должны быть обновлены.
         body:
             application/json:
-                example: { "first_name": "Bill" }
+                example: |
+                    { "first_name": "Bill" }
         responses:
             200:
                 application/json:
                     example: { "success": true }
             400:
                 application/json:
-                    example: { "first_name": "Must be a string." }
+                    example: |
+                        { "first_name": "Must be a string." }
     delete:
         desсription: Удаляет пользователя по ID.
         body:
             application/json:
-                example: { "id": 2 }
+                example: |
+                    { "id": 2 }
         responses:
             200:
                 application/json:
-                    example: { "success": true }
+                    example: |
+                        { "success": true }
