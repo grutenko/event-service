@@ -84,20 +84,21 @@ types:
     get:
         description: Возвращает пользователей.
         queryParameters:
-            event_id:
+            event_id?:
                 description: ID события
-                required: false
                 type: int
                 example: 1
-            limit:
-                required: false,
-                type: int,
-                example: 20,
+            limit?:
+                required: false
+                type: int
+                minimum: 1
+                example: 20
                 default: 50
-            page:
-                required: false,
-                type: int,
-                example: 1,
+            page?:
+                required: false
+                type: int
+                minimum: 1
+                example: 1
                 default: 1
         responses:
             200:
