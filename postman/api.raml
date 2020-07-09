@@ -32,10 +32,10 @@ types:
             responses:
                 400:
                     body: |
-                    { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
+                        { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
                 200:
-                    application/json:
-                        example: { "success": true }
+                     body: |
+                        { "success": true }
         /events:
             post:
                 description: |
@@ -51,14 +51,12 @@ types:
                         example: |
                             {"event_id": 1}
                 responses:
-                    400:
-                        application/json:
-                            example: |
-                                {"error": "USER_NOT_FOUND"}
-                    200:
-                        application/json:
-                            example: |
-                                {"success": true}
+                    400: 
+                        body: |
+                            {"error": "USER_NOT_FOUND"}
+                    200: 
+                        body: |
+                            {"success": true}
             delete:
                 description: |
                     Удаляет пользователя из списка участников мероприятия __event_id__.
@@ -73,28 +71,26 @@ types:
                         example: |
                             {"event_id": 1}
                 responses:
-                    400:
-                        application/json:
-                            example: |
-                                {"error": "USER_NOT_FOUND"}
-                    200:
-                        application/json:
-                            example: |
-                                {"success": true}
+                    400: 
+                        body: |
+                            {"error": "USER_NOT_FOUND"}
+                    200: 
+                        body: |
+                            {"success": true}
     get:
         description: Возвращает пользователей.
         queryParameters:
-            event_id?:
+            event_id:
                 description: ID события
                 type: int
                 example: 1
-            limit?:
+            limit:
                 required: false
                 type: int
                 minimum: 1
                 example: 20
                 default: 50
-            page?:
+            page:
                 required: false
                 type: int
                 minimum: 1
@@ -110,26 +106,19 @@ types:
 
             1. INVALID_PARAMS
             2. EMAIL_ALREADY_EXIST
-        body:
-            application/json:
-                type: User
+        body: User
         responses:
-            200:
-                application/json:
-                    example: |
-                        {"id": 2}
-            400:
-                application/json:
-                    example: |
-                        { "error": "INVALID_PARAMS", "fist_name": "Is required." }
+            200: 
+                body: |
+                    {"id": 2}
+            400: 
+                body: |
+                    { "error": "INVALID_PARAMS", "fist_name": "Is required." }
     delete:
         desсription: Удаляет пользователя по ID.
-        body:
-            application/json:
-                example: |
-                    { "id": 2 }
+        body: |
+            { "id": 2 }
         responses:
             200:
-                application/json:
-                    example: |
-                        { "success": true }
+                body: |
+                    { "success": true }
