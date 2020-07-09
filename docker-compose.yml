@@ -11,8 +11,8 @@ mysql:
         - ./image/mysql/data/:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_USER: root
-        MYSQL_PASSWORD: event-service
+        MYSQL_USER: usr
+        MYSQL_PASSWORD: usr-password
         MYSQL_DATABASE: event-service
 
 ####################################################################################################
@@ -23,7 +23,7 @@ php:
     ports:
         - "9000:9000"
     volumes:
-        - ./src/:/var/www/html
+        - ./src:/var/www/html:www-data:www-data
     links:
         - mysql
     
