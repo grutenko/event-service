@@ -89,46 +89,46 @@ types:
                 application/json:
                     example: |
                         { "success": true }
-/users/{id}/events:
-    post:
-        description: |
-            Привязывает пользователя к событию.
-            Возвращает success:true или одну из ошибок:
-            
-            1. USER_NOT_FOUND
-            2. EVENT_NOT_FOUND
-        body:
-            application/json:
-                example: |
-                    {"event_id": 1}
-        responses:
-            400:
+    /{id}/events:
+        post:
+            description: |
+                Привязывает пользователя к событию.
+                Возвращает success:true или одну из ошибок:
+                
+                1. USER_NOT_FOUND
+                2. EVENT_NOT_FOUND
+            body:
                 application/json:
                     example: |
-                        {"error": "USER_NOT_FOUND"}
-            200:
-                application/json:
-                    example: |
-                        {"success": true}
-    delete:
-        description: |
-            Удаляет пользователя из списка участников мероприятия __event_id__.
-            Возвращает __success:true__ или одну из ошибок:
+                        {"event_id": 1}
+            responses:
+                400:
+                    application/json:
+                        example: |
+                            {"error": "USER_NOT_FOUND"}
+                200:
+                    application/json:
+                        example: |
+                            {"success": true}
+        delete:
+            description: |
+                Удаляет пользователя из списка участников мероприятия __event_id__.
+                Возвращает __success:true__ или одну из ошибок:
 
-            1. USER_NOT_FOUND
-            2. EVENT_NOT_FOUND
+                1. USER_NOT_FOUND
+                2. EVENT_NOT_FOUND
 
-            _Если пользователь не является участником этого события, то просто возвращается успешный ответ._
-        body:
-            application/json:
-                example: |
-                    {"event_id": 1}
-        responses:
-            400:
+                _Если пользователь не является участником этого события, то просто возвращается успешный ответ._
+            body:
                 application/json:
                     example: |
-                        {"error": "USER_NOT_FOUND"}
-            200:
-                application/json:
-                    example: |
-                        {"success": true}
+                        {"event_id": 1}
+            responses:
+                400:
+                    application/json:
+                        example: |
+                            {"error": "USER_NOT_FOUND"}
+                200:
+                    application/json:
+                        example: |
+                            {"success": true}
