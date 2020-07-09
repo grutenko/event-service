@@ -16,6 +16,11 @@ types:
         minLength: 5
         maxLength: 255
         pattern: ^.+@.+\..+$
+    Error:
+        type: object
+        properties:
+            error: string
+            details?: object
 /users:
     /{id}:
         put:
@@ -25,17 +30,18 @@ types:
 
                 1. INVALID_PARAMS
                 2. USER_NOT_FOUND
-            body:
-                application/json:
-                    example: |
-                    { "first_name": "Bill" }
+
             responses:
                 400:
-                    body: |
-                        { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
+                    body: Error
                 200:
-                     body: |
-                        { "success": true }
+                    body:
+                        application/json:
+                            properties:
+                                success:
+                                    type: boolean
+                            example:
+                                success: true
         /events:
             post:
                 description: |
@@ -48,15 +54,20 @@ types:
                     _Если пользователь уже является участником этого события, то просто возвращается успешный ответ._
                 body:
                     application/json:
-                        example: |
-                            {"event_id": 1}
+                        properties:
+                            event_id:
+                                type: int
                 responses:
                     400: 
-                        body: |
-                            {"error": "USER_NOT_FOUND"}
+                        body: Error
                     200: 
-                        body: |
-                            {"success": true}
+                        body: 
+                            application/json:
+                                properties:
+                                    success:
+                                        type: boolean
+                                example:
+                                    success: true
             delete:
                 description: |
                     Удаляет пользователя из списка участников мероприятия __event_id__.
