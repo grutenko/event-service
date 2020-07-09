@@ -59,7 +59,7 @@ types:
             400:
                 application/json:
                     example: |
-                        { "fist_name": "Is required." }
+                        { "error": "INVALID_PARAMS", "fist_name": "Is required." }
     update:
         description: |
             Изменяет данные пользователя. Может быть переданы некоторые поля пользователя которые должны быть обновлены.
@@ -71,13 +71,13 @@ types:
                 example: |
                     { "first_name": "Bill" }
         responses:
-            200:
-                application/json:
-                    example: { "success": true }
             400:
                 application/json:
                     example: |
-                        { "first_name": "Must be a string." }
+                        { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
+            200:
+                application/json:
+                    example: { "success": true }
     delete:
         desсription: Удаляет пользователя по ID.
         body:
@@ -102,11 +102,33 @@ types:
                 example: |
                     {"event_id": 1}
         responses:
-            200:
-                application/json:
-                    example: |
-                        {"success": true}
             400:
                 application/json:
                     example: |
                         {"error": "USER_NOT_FOUND"}
+            200:
+                application/json:
+                    example: |
+                        {"success": true}
+    delete:
+        description: |
+            Удаляет пользователя из списка участников мероприятия __event_id__.
+            Возвращает __success:true__ или одну из ошибок:
+
+            1. USER_NOT_FOUND
+            2. EVENT_NOT_FOUND
+
+            _Если пользователь не является участником этого события, то просто возвращается успешный ответ._
+        body:
+            application/json:
+                example: |
+                    {"event_id": 1}
+        responses:
+            400:
+                application/json:
+                    example: |
+                        {"error": "USER_NOT_FOUND"}
+            200:
+                application/json:
+                    example: |
+                        {"success": true}
