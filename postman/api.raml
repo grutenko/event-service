@@ -10,7 +10,12 @@ types:
         properties:
             first_name: string
             last_name: string
-            email: string
+            email: Email
+    Email:
+        type: string
+        minLength: 5
+        maxLength: 255
+        pattern: ^.+@.+\..+$
 /users:
     /{id}:
         put:
@@ -23,12 +28,11 @@ types:
             body:
                 application/json:
                     example: |
-                        { "first_name": "Bill" }
+                    { "first_name": "Bill" }
             responses:
                 400:
-                    application/json:
-                        example: |
-                            { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
+                    body: |
+                    { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
                 200:
                     application/json:
                         example: { "success": true }
@@ -99,14 +103,7 @@ types:
             200:
                 body:
                     application/json:
-                        example: |
-                            [
-                                {
-                                    "first_name": "John",
-                                    "last_name": "Bay",
-                                    "email": "test@mail.com"
-                                }
-                            ]
+                        example: User[]
     post:
         description: |
             Добавляет нового пользователя.
