@@ -13,7 +13,7 @@ types:
             email: string
 /users:
     get:
-        description: Возвращает пользователей
+        description: Возвращает пользователей.
         queryParameters:
             event_id:
                 description: ID события
@@ -43,7 +43,11 @@ types:
                                 }
                             ]
     post:
-        description: Добавляет нового пользователя.
+        description: |
+            Добавляет нового пользователя.
+            Возвращает success:true или одну из ошибок:
+
+            1. INVALID_PARAMS
         body:
             application/json:
                 type: User
@@ -57,7 +61,11 @@ types:
                     example: |
                         { "fist_name": "Is required." }
     update:
-        description: Изменяет данные пользователя. Может быть переданы некоторые поля пользователя которые должны быть обновлены.
+        description: |
+            Изменяет данные пользователя. Может быть переданы некоторые поля пользователя которые должны быть обновлены.
+            Возвращает success:true или одну из ошибок:
+
+            1. INVALID_PARAMS
         body:
             application/json:
                 example: |
@@ -81,3 +89,24 @@ types:
                 application/json:
                     example: |
                         { "success": true }
+/users/{id}/events:
+    post:
+        description: |
+            Привязывает пользователя к событию.
+            Возвращает success:true или одну из ошибок:
+            
+            1. USER_NOT_FOUND
+            2. EVENT_NOT_FOUND
+        body:
+            application/json:
+                example: |
+                    {"event_id": 1}
+        responses:
+            200:
+                application/json:
+                    example: |
+                        {"success": true}
+            400:
+                application/json:
+                    example: |
+                        {"error": "USER_NOT_FOUND"}
