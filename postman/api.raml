@@ -12,6 +12,71 @@ types:
             last_name: string
             email: string
 /users:
+    /{id}:
+        put:
+            description: |
+                Изменяет данные пользователя. Может быть переданы некоторые поля пользователя которые должны быть обновлены.
+                Возвращает success:true или одну из ошибок:
+
+                1. INVALID_PARAMS
+                2. USER_NOT_FOUND
+            body:
+                application/json:
+                    example: |
+                        { "first_name": "Bill" }
+            responses:
+                400:
+                    application/json:
+                        example: |
+                            { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
+                200:
+                    application/json:
+                        example: { "success": true }
+        /events:
+            post:
+                description: |
+                    Привязывает пользователя к событию.
+                    Возвращает success:true или одну из ошибок:
+                    
+                    1. USER_NOT_FOUND
+                    2. EVENT_NOT_FOUND
+
+                    _Если пользователь уже является участником этого события, то просто возвращается успешный ответ._
+                body:
+                    application/json:
+                        example: |
+                            {"event_id": 1}
+                responses:
+                    400:
+                        application/json:
+                            example: |
+                                {"error": "USER_NOT_FOUND"}
+                    200:
+                        application/json:
+                            example: |
+                                {"success": true}
+            delete:
+                description: |
+                    Удаляет пользователя из списка участников мероприятия __event_id__.
+                    Возвращает __success:true__ или одну из ошибок:
+
+                    1. USER_NOT_FOUND
+                    2. EVENT_NOT_FOUND
+
+                    _Если пользователь не является участником этого события, то просто возвращается успешный ответ._
+                body:
+                    application/json:
+                        example: |
+                            {"event_id": 1}
+                responses:
+                    400:
+                        application/json:
+                            example: |
+                                {"error": "USER_NOT_FOUND"}
+                    200:
+                        application/json:
+                            example: |
+                                {"success": true}
     get:
         description: Возвращает пользователей.
         queryParameters:
@@ -72,68 +137,3 @@ types:
                 application/json:
                     example: |
                         { "success": true }
-    /{id}:
-        put:
-            description: |
-                Изменяет данные пользователя. Может быть переданы некоторые поля пользователя которые должны быть обновлены.
-                Возвращает success:true или одну из ошибок:
-
-                1. INVALID_PARAMS
-                2. USER_NOT_FOUND
-            body:
-                application/json:
-                    example: |
-                        { "first_name": "Bill" }
-            responses:
-                400:
-                    application/json:
-                        example: |
-                            { "error": "INVALID_PARAMS", "first_name": "Must be a string." }
-                200:
-                    application/json:
-                        example: { "success": true }
-    /events:
-        post:
-            description: |
-                Привязывает пользователя к событию.
-                Возвращает success:true или одну из ошибок:
-                
-                1. USER_NOT_FOUND
-                2. EVENT_NOT_FOUND
-
-                _Если пользователь уже является участником этого события, то просто возвращается успешный ответ._
-            body:
-                application/json:
-                    example: |
-                        {"event_id": 1}
-            responses:
-                400:
-                    application/json:
-                        example: |
-                            {"error": "USER_NOT_FOUND"}
-                200:
-                    application/json:
-                        example: |
-                            {"success": true}
-        delete:
-            description: |
-                Удаляет пользователя из списка участников мероприятия __event_id__.
-                Возвращает __success:true__ или одну из ошибок:
-
-                1. USER_NOT_FOUND
-                2. EVENT_NOT_FOUND
-
-                _Если пользователь не является участником этого события, то просто возвращается успешный ответ._
-            body:
-                application/json:
-                    example: |
-                        {"event_id": 1}
-            responses:
-                400:
-                    application/json:
-                        example: |
-                            {"error": "USER_NOT_FOUND"}
-                200:
-                    application/json:
-                        example: |
-                            {"success": true}
