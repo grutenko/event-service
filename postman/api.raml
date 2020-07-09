@@ -42,6 +42,15 @@ types:
                                     type: boolean
                             example:
                                 success: true
+        delete:
+            desсription: Удаляет пользователя по ID.
+            responses:
+                200:
+                    body:
+                        application/json:
+                            properties:
+                                success:
+                                    type: boolean
         /events:
             post:
                 description: |
@@ -128,17 +137,7 @@ types:
                 body:
                     application/json:
                         properties:
-                            id:
-                                type: integer
+                            success:
+                                type: boolean
             400: 
                 body: Error
-    delete:
-        desсription: Удаляет пользователя по ID.
-        body:
-            application/json:
-                properties:
-                    id:
-                        type: integer
-            200:
-                body: |
-                    { "success": true }
