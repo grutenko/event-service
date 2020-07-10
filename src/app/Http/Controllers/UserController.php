@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Event;
+use App\Jobs\SendEmailCreateAccountJob;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -44,7 +45,7 @@ class UserController extends Controller
      */
     public function post(Request $request)
     {
-        $params = $request->json();
+        $params = $request->json()->all();
         $validator = Validator::make($params, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -53,7 +54,10 @@ class UserController extends Controller
 
         if($validator->fails())
         {
-            return $this->buildFailedValidationResponse($request, $validator->errors()->all());
+            return response()->json([
+                'error' => 'PARAMS_ERROR',
+                'details' => $validator->errors()->all()
+            ], 422);
         }
         if(User::where('email', $params['email'])->count() > 0)
         {
@@ -61,6 +65,7 @@ class UserController extends Controller
         }
 
         User::create($params);
+        dispatch(new SendEmailCreateAccountJob($params['email']));
         return response()->json(['success' => true]);
     }
 
@@ -73,7 +78,7 @@ class UserController extends Controller
      */
     public function put(Request $request, $id)
     {
-        $params = $request->json();
+        $params = $request->json()->all();
 
         $validator = Validator::make($params, [
             'first_name' => 'max:255',
@@ -82,7 +87,10 @@ class UserController extends Controller
         ]);
         if($validator->fails())
         {
-            return $this->buildFailedValidationResponse($request, $validator->errors()->all());
+            return response()->json([
+                'error' => 'PARAMS_ERROR',
+                'details' => $validator->errors()->all()
+            ], 422);
         }
 
         $user = User::find($id);
@@ -121,14 +129,17 @@ class UserController extends Controller
      */
     public function link(Request $request, $id)
     {
-        $params = $request->json();
+        $params = $request->json()->all();
 
         $validator = Validator::make($params, [
             'event_id' => 'required'
         ]);
         if($validator->fails())
         {
-            return $this->buildFailedValidationResponse($request, $validator->errors()->all());
+            return response()->json([
+                'error' => 'PARAMS_ERROR',
+                'details' => $validator->errors()->all()
+            ], 422);
         }
 
         if( null === ($user = User::find($id)) )
@@ -157,13 +168,16 @@ class UserController extends Controller
 
     public function unlink(Request $request, $id)
     {
-        $params = $request->json();
+        $params = $request->json()->all();
         $validator = Validator::make($params, [
             'event_id' => 'required'
         ]);
         if($validator->fails())
         {
-            return $this->buildFailedValidationResponse($request, $validator->errors()->all());
+            return response()->json([
+                'error' => 'PARAMS_ERROR',
+                'details' => $validator->errors()->all()
+            ], 422);
         }
 
         if( null === ($user = User::find($id)) )
