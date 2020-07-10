@@ -1,1 +1,1 @@
-Разрабатывается на основе https://github.com/netojose/docker-lumen
+Построено на основе https://github.com/netojose/docker-lumen

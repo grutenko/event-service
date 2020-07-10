@@ -11,6 +11,10 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/users', "UserController@get");
+$router->post('/users', "UserController@post");
+$router->put('/users/{id}', "UserController@put");
+$router->delete('/users/{id}', "UserController@delete");
+
+$router->post('/users/{id}/events', "UserController@link");
+$router->delete('/users/{id}/events', "UserController@unlink");

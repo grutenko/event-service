@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Event extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email',
+        'name', 'date'
     ];
 
     /**
@@ -20,8 +20,8 @@ class User extends Model
      *
      * @return void
      */
-    public function events()
+    public function users()
     {
-        return $this->belongsToMany('App\Event');
+        return $this->belongsToMany('App\User');
     }
 }
