@@ -23,7 +23,7 @@ php:
     ports:
         - "9000:9000"
     volumes:
-        - ./src:/var/www/html:www-data:www-data
+        - ./src:/var/www/html
     links:
         - mysql
     
