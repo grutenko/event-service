@@ -124,9 +124,7 @@ class UserController extends Controller
         $params = $request->json();
 
         $validator = Validator::make($params, [
-            'first_name' => 'max:255',
-            'last_name' => 'max:255',
-            'email' => 'max:255'
+            'event_id' => 'required'
         ]);
         if($validator->fails())
         {
@@ -159,6 +157,25 @@ class UserController extends Controller
 
     public function unlink(Request $request, $id)
     {
+        $params = $request->json();
+        $validator = Validator::make($params, [
+            'event_id' => 'required'
+        ]);
+        if($validator->fails())
+        {
+            return $this->buildFailedValidationResponse($request, $validator->errors()->all());
+        }
+
+        if( null === ($user = User::find($id)) )
+        {
+            return response()->json(['error' => 'USER_NOT_FOUND'], 404);
+        }
+
+        DB::table('users_events')
+            ->where('user_id', $id)
+            ->where('event_id', $params['event_id'])
+            ->delete();
+
         return response()->json(['success' => true]);
     }
 }
