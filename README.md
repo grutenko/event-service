@@ -2,16 +2,14 @@
 
 ## Установка
 
-```bash
-# git clone https://github.com/grutenko/event-service
-# cd event-service
-# docker-compose build
-# docker-compose up -d
-```
-
-```bash
-# docker exec -it eventsservice_app_1 composer install && ln -s .env.production src/.env && php src/artisan migrate && php src/artisan db:seed
-```
+1. Установить Docker и Docker Compose
+2. Клонировать и собрать проект.
+    ```bash
+    git clone https://github.com/grutenko/event-service
+    cd event-service
+    docker-compose build
+    docker-compose up -d
+    ```
 
 ---> _http://localhost:8080_
 

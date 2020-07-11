@@ -12,5 +12,4 @@ ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /var/www/html
 
-# Set supervisor to manage container processes
-ENTRYPOINT ["/usr/bin/supervisord"]
+CMD composer install && ln -sf .env.production .env && php artisan migrate && php artisan db:seed
