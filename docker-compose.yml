@@ -26,6 +26,10 @@ app:
         - ./src:/var/www/html
     links:
         - mysql
+    command: /bin/bash -c "/wait && composer install && ln -s -f .env.production .env && php artisan migrate --force && /usr/bin/supervisord"
+    environment:
+        WAIT_HOSTS: mysql:3306
+        WAIT_HOSTS_TIMEOUT: 60
     
 ####################################################################################################
 # Creating container (Nginx)

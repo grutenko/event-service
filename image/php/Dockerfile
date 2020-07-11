@@ -12,4 +12,5 @@ ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /var/www/html
 
-CMD composer install && ln -sf .env.production .env && php artisan migrate && php artisan db:seed
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
