@@ -5,11 +5,12 @@
 ```bash
 # git clone https://github.com/grutenko/event-service
 # cd event-service
+# docker-compose build
 # docker-compose up -d
 ```
 
 ```bash
-# docker exec -it eventsservice_app_1 php artisan db:seed
+# docker exec -it eventsservice_app_1 composer install && ln -s .env.production src/.env && php src/artisan migrate && php src/artisan db:seed
 ```
 
 ---> _http://localhost:8080_
